@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nombre - Smart Room</title>
+    <link rel="stylesheet" href="css/iroom.css">
+</head>
+
+<body>
+ <main>
+    <header>
+        <h1>Introduce tu nombre</h1>
+    </header>
+
+    <form id="formNombre">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Guardar nombre</button>
+    </form>
+
+    <a href="index.html">Volver a la página principal</a>
+ </main>
+ <script>
+    const formulario = document.getElementById("formNombre");
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const nombre = document.getElementById("nombre").value;
+
+        localStorage.setItem("fname", nombre);
+
+        window.location.href = "index.html";
+    });
+</script>
+</body>
+
+</html>
