@@ -5,6 +5,15 @@ body {
 main {
     max-width: 1200px;
     margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+header,
+nav,
+aside,
+footer{
+    grid-column: 1 /-1;
 }
 header {
     text-align: center;
@@ -14,19 +23,44 @@ h1 {
     font-weight: bold;
     color: black;
 }
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
 nav {
+    padding: 10px;
+}
+nav a {
+    margin-right: 10px;
+}
+aside {
     padding: 10px;
 }
 section {
     padding: 20px;
 }
+ul {
+    line-height: 1.6;
+}
+li {
+    margin-bottom: 8px;
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
 footer{
     text-align: center;
     padding: 15px;
 }
-a{
+a {
     text-decoration: underline;
 }
 a:focus {
     outline: 2px solid;
+}
+@media (max-width: 700px) {
+    main{
+        grid-template-columns: 1fr;
+    }
 }
