@@ -4,15 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Configuración - Smart Room</title>
+    <link rel="stylesheet" href="css/iroom.css">
 </head>
 <body>
     <main>
 
         <header>
-            <h1> Configuración de la Smart Room</h1>
+            <h1>Configuración de la Smart Room</h1>
         </header>
 
         <form>
+
+        <div class="columna-izquierda">
+
             <label for="pais">País:</label>
             <input type="text" id="pais" name="pais" list="paises">
 
@@ -30,7 +34,7 @@
             <label for="localizacion">Localización:</label>
             <input type="text" id="localizacion" name="localizacion">
 
-            <label for="mapa">enlace a google maps:</label>
+            <label for="mapa">Enlace a Google Maps:</label>
             <input type="url" id="mapa" name="mapa">
 
             <label for="foto">Fotografía de la habitación:</label>
@@ -38,6 +42,11 @@
 
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password">
+
+        </div>
+
+            <div class="columna-derecha">
+
             <fieldset>
                 <legend>Sensores disponibles</legend>
 
@@ -67,10 +76,14 @@
             <output id="diferencia" name="diferencia"></output>
 
             <button type="submit">Guardar configuración</button>
+            </div>
         </form>
 
         <a href="index.html">Volver a la página principal</a>
     </main>
+
+    <script src="datos.js"></script>
+
     <script>
         const tempMax = document.getElementById("tempMax");
         const tempMin = document.getElementById("tempMin");
