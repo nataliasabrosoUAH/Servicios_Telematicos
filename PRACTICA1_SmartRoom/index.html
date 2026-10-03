@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart Room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/iroom.css">
 </head>
 
@@ -14,11 +15,11 @@
         </header>
         <nav>
             <a href="index.html">Inicio</a>
-            <a href="config.html">Configuracion</a>
+            <a href="config.html">Configuración</a>
             <a href="minombre.html">Nombre</a>
         </nav>
         <aside>
-            <p>Información</p>
+            <p id="bienvenida"></p>
         </aside>
         <section>
             <h2>Datos de la habitación</h2>
@@ -51,5 +52,16 @@
             <p>Universidad de Alcalá</p>
         </footer>
     </main>
+    <script>
+    const fname = localStorage.getItem("fname");
+
+    if (fname) {
+        document.getElementById("bienvenida").textContent =
+            "Hola " + fname + ": Bienvenido a Smart Room.";
+    } else {
+        document.getElementById("bienvenida").textContent =
+            "Bienvenido a Smart Room.";
+    }
+</script>
 </body> 
 </html>
