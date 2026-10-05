@@ -19,7 +19,7 @@
             <a href="minombre.html">Nombre</a>
         </nav>
         <aside>
-            <p id="informacion">Información</p>
+            <p>Información</p>
         </aside>
         <section>
             <h2>Datos de la habitación</h2>
@@ -52,13 +52,5 @@
             <p>Universidad de Alcalá</p>
         </footer>
     </main>
-    <script>
-        const fname = localStorage.getItem("fname");
-        const informacion = document.getElementById("informacion");
-
-        if (fname) {
-        informacion.textContent = "Hola " + fname + ": Bienvenido a Smart Room.";
-        }
-    </script>
 </body> 
 </html>
