@@ -149,3 +149,36 @@ main > a {
         grid-template-columns: 1fr;
     }
 }
+body {
+    background-color: #F7F8FA;
+    color: #252A30;
+}
+
+header,
+footer {
+    background-color: #243447;
+    color: white;
+}
+
+h2 {
+    color: #243447;
+}
+
+nav a {
+    background-color: #E8EEF4;
+    color: #243447;
+}
+
+nav a:hover {
+    background-color: #5C7894;
+    color: white;
+}
+
+button {
+    background-color: #243447;
+    color: white;
+}
+
+button:hover {
+    background-color: #5C7894;
+}
