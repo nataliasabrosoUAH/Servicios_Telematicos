@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/iroom.css">
 </head>
 
@@ -19,7 +20,8 @@
             <a href="minombre.html">Nombre</a>
         </nav>
         <aside>
-            <p id="informacion">Información</p>
+            <p>Información</p>
+            <p id="bienvenida"></p>
         </aside>
         <section>
             <h2>Datos de la habitación</h2>
@@ -53,12 +55,15 @@
         </footer>
     </main>
     <script>
-        const fname = localStorage.getItem("fname");
-        const informacion = document.getElementById("informacion");
+    const fname = localStorage.getItem("fname");
 
-        if (fname) {
-        informacion.textContent = "Hola " + fname + ": Bienvenido a Smart Room.";
-        }
-    </script>
+    if (fname) {
+        document.getElementById("bienvenida").textContent =
+            "Hola " + fname + ": Bienvenido a Smart Room.";
+    } else {
+        document.getElementById("bienvenida").textContent =
+            "Bienvenido a Smart Room.";
+    }
+</script>
 </body> 
 </html>
