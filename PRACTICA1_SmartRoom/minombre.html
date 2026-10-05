@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nombre - Smart Room</title>
     <link rel="stylesheet" href="css/iroom.css">
 </head>
@@ -23,11 +24,18 @@
  </main>
  <script>
     const formulario = document.getElementById("formNombre");
+    const campoNombre = document.getElementById("nombre");
+
+const nombreGuardado = localStorage.getItem("fname");
+
+if (nombreGuardado) {
+    campoNombre.value = nombreGuardado;
+}
 
     formulario.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        const nombre = document.getElementById("nombre").value;
+        const nombre = campoNombre.value.trim();
 
         localStorage.setItem("fname", nombre);
 
