@@ -24,7 +24,6 @@ footer {
 nav {
     grid-column: 1;
     padding: 10px;
-    margin-right: 10px;
 }
 aside {
     grid-column: 2;
@@ -51,12 +50,14 @@ li {
 img{
     max-width: 100%;
     height: auto;
+    margin-top: 15px;
 }
 a {
     text-decoration: underline;
 }
 a:focus {
     outline: 2px solid;
+    outline-offset: 2px;
 }
 .form-config {
     grid-column: 1 / -1;
