@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -9,14 +12,22 @@ main {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
-header,
-nav,
-aside,
-footer{
-    grid-column: 1 /-1;
-}
 header {
+    grid-column: 1 / -1;
     text-align: center;
+}
+footer {
+    grid-column: 1 /-1;
+    text-align: center;
+    padding: 15px;
+}
+nav {
+    grid-column: 1;
+    padding: 10px;
+}
+aside {
+    grid-column: 2;
+    padding: 10px;
 }
 h1 {
     font-size: 32px;
@@ -26,15 +37,6 @@ h1 {
 h2 {
     font-size: 24px;
     font-weight: bold;
-}
-nav {
-    padding: 10px;
-}
-nav a {
-    margin-right: 10px;
-}
-aside {
-    padding: 10px;
 }
 section {
     padding: 20px;
@@ -48,19 +50,102 @@ li {
 img{
     max-width: 100%;
     height: auto;
-}
-footer{
-    text-align: center;
-    padding: 15px;
+    margin-top: 15px;
 }
 a {
     text-decoration: underline;
 }
 a:focus {
     outline: 2px solid;
+    outline-offset: 2px;
+}
+.form-config {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+}
+
+.columna-izquierda {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.columna-derecha {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-config input[type="text"],
+.form-config input[type="url"],
+.form-config input[type="password"],
+.form-config input[type="number"],
+.form-config input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+fieldset legend {
+    grid-column: 1 / -1;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+output {
+    display: block;
+    min-height: 24px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+#formNombre {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    justify-self: center;
+    box-sizing: border-box;
+}
+
+#formNombre input {
+    padding: 8px;
+}
+
+main > a {
+    grid-column: 1 / -1;
+    margin: 10px 20px 20px;
 }
 @media (max-width: 700px) {
-    main{
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    nav,
+    aside {
+        grid-column: 1;
+    }
+
+    .form-config {
         grid-template-columns: 1fr;
     }
 }
