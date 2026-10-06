@@ -12,23 +12,34 @@
 <body>
     <main>
         <header>
-            <h1>Smart Room</h1>
-        </header>
+    <div class="titulo-smartroom">
+        <img src="images/icono-casa-smart.png" alt="Icono de casa">
+        <h1>Smart Room</h1>
+    </div>
+</header>
         <nav>
             <a href="index.html">Inicio</a>
             <a href="config.html">Configuración</a>
             <a href="minombre.html">Nombre</a>
         </nav>
         <aside>
-            <p id="bienvenida"></p>
+            <div id="bienvenida-contenedor">
+    <img src="images/icono-usuario.png" class="icono-bienvenida" alt="">
+    <p id="bienvenida"></p>
+</div>
         </aside>
         <section>
-            <h2>Datos de la habitación</h2>
+           <h2>
+    <img src="images/icono-casa.png" class="icono-titulo" alt="">
+    Datos de la habitación
+</h2>
 
             <ul>
-                <li>País: España</li>
-                <li>Ciudad: Alcalá de Henares</li>
-                <li>Localización: Escuela Politécnica Superior</li>
+                
+    <li>🌐 País: España</li>
+    <li>📍 Ciudad: Alcalá de Henares</li>
+    <li>🏛️ Localización: Escuela Politécnica Superior</li>
+
             </ul>
 
             <a href="https://maps.app.goo.gl/vVNK8aer24JDuCvp9" target="_blank">
@@ -39,7 +50,10 @@
         </section>
 
         <section>
-            <h2>Datos de los sensores</h2>
+            <h2>
+    <img src="images/icono-sensores.png" class="icono-titulo" alt="">
+    Datos de los sensores
+</h2>
 
             <ul>
                 <li>🌡️ Temperatura</li>
@@ -59,8 +73,8 @@
             </details>
         </section>
         <footer>
-            <p>Universidad de Alcalá</p>
-        </footer>
+    <img src="images/logo-uah.png" alt="Universidad de Alcalá" class="logo-uah">
+</footer>
     </main>
     <script>
         const fname = localStorage.getItem("fname");
@@ -73,6 +87,5 @@
             "Bienvenido a Smart Room.";
         }
     </script>
->>>>>>> origin/main
 </body> 
 </html>

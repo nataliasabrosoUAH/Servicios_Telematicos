@@ -40,10 +40,11 @@ aside {
     padding: 10px;
 }
 h1 {
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 48px;
     font-weight: bold;
     color: #5f3f45;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
 }
 h2 {
     font-size: 24px;
@@ -67,6 +68,13 @@ img{
     margin-top: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.logo-uah {
+    width: 180px;
+    height: auto;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 a {
     text-decoration: underline;
@@ -161,6 +169,79 @@ main > a {
     background-color: #fffaf7;
     padding: 10px 15px;
     border-radius: 8px;
+}
+input:focus {
+    border: 2px solid #7a4f57;
+    outline: none;
+}
+details {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f3ece7;
+    border-radius: 8px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+.form-config,
+#formNombre {
+    background-color: #fffaf7;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.icono-titulo {
+    width: 30px;
+    height: auto;
+    margin: 0 8px 0 0;
+    border-radius: 0;
+    box-shadow: none;
+    vertical-align: middle;
+}
+#bienvenida-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fffaf7;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+#bienvenida-contenedor #bienvenida {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.icono-bienvenida {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.titulo-smartroom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding-top: 25px;
+}
+
+.titulo-smartroom img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.titulo-smartroom h1 {
+    margin: 0;
 }
 @media (max-width: 700px) {
     main {
