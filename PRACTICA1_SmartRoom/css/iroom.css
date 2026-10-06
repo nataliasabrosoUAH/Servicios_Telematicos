@@ -40,9 +40,10 @@ aside {
     padding: 10px;
 }
 h1 {
-    font-size: 32px;
+    font-size: 48px;
     font-weight: bold;
-    color: black;
+    color: #5f3f45;
+    letter-spacing: 1.5px;
 }
 h2 {
     font-size: 24px;
