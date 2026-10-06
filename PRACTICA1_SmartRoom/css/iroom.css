@@ -69,7 +69,13 @@ img{
 }
 a {
     text-decoration: underline;
+    color: #7a4f57;
 }
+
+a:visited {
+    color: #7a4f57;
+}
+
 a:focus {
     outline: 2px solid;
     outline-offset: 2px;
@@ -149,6 +155,11 @@ output {
 main > a {
     grid-column: 1 / -1;
     margin: 10px 20px 20px;
+}
+#bienvenida {
+    background-color: #fffaf7;
+    padding: 10px 15px;
+    border-radius: 8px;
 }
 @media (max-width: 700px) {
     main {
