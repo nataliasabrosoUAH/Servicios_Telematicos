@@ -20,7 +20,6 @@
             <a href="minombre.html">Nombre</a>
         </nav>
         <aside>
-            <p>Información</p>
             <p id="bienvenida"></p>
         </aside>
         <section>
@@ -43,27 +42,37 @@
             <h2>Datos de los sensores</h2>
 
             <ul>
-                <li>Temperatura</li>
-                <li>Humedad</li>
-                <li>Nivel de sonido</li>
-                <li>Nivel de luz</li>
-                <li>Movimiento</li>
+                <li>🌡️ Temperatura</li>
+                <li>💧 Humedad</li>
+                <li>🔊 Nivel de sonido</li>
+                <li>💡 Nivel de luz</li>
+                <li>🚶 Movimiento</li>
             </ul>
+
+            <details>
+                <summary>Información sobre la Smart Room</summary>
+                <p>
+                    La Smart Room utiliza diferentes sensores para controlar
+                    las condiciones de la habitación, como la temperatura,
+                    la humedad, la luz, el sonido y el movimiento.
+                </p>
+            </details>
         </section>
         <footer>
             <p>Universidad de Alcalá</p>
         </footer>
     </main>
     <script>
-    const fname = localStorage.getItem("fname");
+        const fname = localStorage.getItem("fname");
 
-    if (fname) {
+        if (fname) {
         document.getElementById("bienvenida").textContent =
             "Hola " + fname + ": Bienvenido a Smart Room.";
-    } else {
+        } else {
         document.getElementById("bienvenida").textContent =
             "Bienvenido a Smart Room.";
-    }
-</script>
+        }
+    </script>
+>>>>>>> origin/main
 </body> 
 </html>

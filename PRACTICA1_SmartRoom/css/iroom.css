@@ -4,6 +4,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+    background-color: #f3ece7;
 }
 main {
     max-width: 1200px;
@@ -25,14 +26,24 @@ nav {
     grid-column: 1;
     padding: 10px;
 }
+nav a {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+nav a:hover {
+    background-color: #eeeeee;
+}
 aside {
     grid-column: 2;
     padding: 10px;
 }
 h1 {
-    font-size: 32px;
+    font-size: 48px;
     font-weight: bold;
-    color: black;
+    color: #5f3f45;
+    letter-spacing: 1.5px;
 }
 h2 {
     font-size: 24px;
@@ -40,6 +51,9 @@ h2 {
 }
 section {
     padding: 20px;
+    background-color: #fffaf7;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 ul {
     line-height: 1.6;
@@ -51,10 +65,18 @@ img{
     max-width: 100%;
     height: auto;
     margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 a {
     text-decoration: underline;
+    color: #7a4f57;
 }
+
+a:visited {
+    color: #7a4f57;
+}
+
 a:focus {
     outline: 2px solid;
     outline-offset: 2px;
@@ -134,6 +156,11 @@ output {
 main > a {
     grid-column: 1 / -1;
     margin: 10px 20px 20px;
+}
+#bienvenida {
+    background-color: #fffaf7;
+    padding: 10px 15px;
+    border-radius: 8px;
 }
 @media (max-width: 700px) {
     main {
