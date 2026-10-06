@@ -25,6 +25,15 @@ nav {
     grid-column: 1;
     padding: 10px;
 }
+nav a {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+nav a:hover {
+    background-color: #eeeeee;
+}
 aside {
     grid-column: 2;
     padding: 10px;
