@@ -70,8 +70,22 @@ function passwordValida() {
 campoPassword.addEventListener("input", function () {
     const longitud = campoPassword.value.length;
 
-    indicadorPassword.textContent =
-        "Evaluación de longitud: " + longitud + " caracteres";
+    if (longitud < 9) {
+        indicadorPassword.textContent =
+            "Evaluación de longitud: insuficiente (" + longitud + " caracteres)";
+
+    } else if (longitud <= 11) {
+        indicadorPassword.textContent =
+            "Evaluación de longitud: adecuada (" + longitud + " caracteres)";
+
+    } else if (longitud <= 15) {
+        indicadorPassword.textContent =
+            "Evaluación de longitud: buena (" + longitud + " caracteres)";
+
+    } else {
+        indicadorPassword.textContent =
+            "Evaluación de longitud: muy buena (" + longitud + " caracteres)";
+    }
 });
 
 cerrarModal.addEventListener("click", function () {
