@@ -4,6 +4,8 @@ const listaPaises = document.getElementById("paises");
 const campoTempActual = document.getElementById("tempActual");
 const campoPassword = document.getElementById("password");
 const indicadorPassword = document.getElementById("indicadorPassword");
+const campoTempMax = document.getElementById("tempMax");
+const campoTempMin = document.getElementById("tempMin");
 
 const modalErrores = document.getElementById("modalErrores");
 const listaErrores = document.getElementById("listaErrores");
@@ -48,24 +50,35 @@ function temperaturaFueraDeRango() {
     return temperatura < 22 || temperatura > 26;
 }
 
+function temperaturasMaxMinValidas() {
+    if (campoTempMax.value.trim() === "" || campoTempMin.value.trim() === "") {
+        return true;
+    }
+
+    const maxima = Number(campoTempMax.value);
+    const minima = Number(campoTempMin.value);
+
+    return maxima >= minima;
+}
+
 function passwordValida() {
     const password = campoPassword.value;
 
     return password.length >= 9;
 }
 
-campoPassword.addEventListener("input", function() {
+campoPassword.addEventListener("input", function () {
     const longitud = campoPassword.value.length;
 
-    indicadorPassword.textContent = 
+    indicadorPassword.textContent =
         "Evaluación de longitud: " + longitud + " caracteres";
 });
 
-cerrarModal.addEventListener("click", function(){
+cerrarModal.addEventListener("click", function () {
     modalErrores.close();
 });
 
-formulario.addEventListener("submit", function(event) {
+formulario.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const errores = [];
@@ -82,34 +95,38 @@ formulario.addEventListener("submit", function(event) {
         errores.push("La contraseña debe tener al menos 9 caracteres.");
     }
 
-if (errores.length > 0) {
-    listaErrores.innerHTML = "";
-
-    for (const error of errores) {
-        const elemento = document.createElement("li");
-        elemento.textContent = error;
-        listaErrores.appendChild(elemento);
+    if (!temperaturasMaxMinValidas()) {
+        errores.push("La temperatura máxima debe ser mayor o igual a la mínima.");
     }
 
-    modalErrores.showModal();
+    if (errores.length > 0) {
+        listaErrores.innerHTML = "";
 
-} else if (temperaturaFueraDeRango()) {
-    listaErrores.innerHTML = "";
+        for (const error of errores) {
+            const elemento = document.createElement("li");
+            elemento.textContent = error;
+            listaErrores.appendChild(elemento);
+        }
 
-    const aviso = document.createElement("li");
-    aviso.textContent = "Advertencia: la temperatura está fuera del intervalo recomendado de 22 a 26 ºC.";
-    listaErrores.appendChild(aviso);
+        modalErrores.showModal();
 
-    modalErrores.showModal();
+    } else if (temperaturaFueraDeRango()) {
+        listaErrores.innerHTML = "";
 
-} else {
-    listaErrores.innerHTML = "";
+        const aviso = document.createElement("li");
+        aviso.textContent = "Advertencia: la temperatura está fuera del intervalo recomendado de 22 a 26 ºC.";
+        listaErrores.appendChild(aviso);
 
-    const mensaje = document.createElement("li");
-    mensaje.textContent = "Los datos introducidos son válidos.";
-    listaErrores.appendChild(mensaje);
+        modalErrores.showModal();
 
-    modalErrores.showModal();
-}
+    } else {
+        listaErrores.innerHTML = "";
+
+        const mensaje = document.createElement("li");
+        mensaje.textContent = "Los datos introducidos son válidos.";
+        listaErrores.appendChild(mensaje);
+
+        modalErrores.showModal();
+    }
 
 });
