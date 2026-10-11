@@ -11,6 +11,10 @@ const modalErrores = document.getElementById("modalErrores");
 const listaErrores = document.getElementById("listaErrores");
 const cerrarModal = document.getElementById("cerrarModal");
 
+const campoCoordenadas = document.getElementById("coordenadas");
+const campoMapa = document.getElementById("mapa");
+const botonGenerarMapa = document.getElementById("generarMapa");
+
 function paisValido() {
     const paisIntroducido = campoPais.value.trim().toLowerCase();
 
@@ -144,3 +148,133 @@ formulario.addEventListener("submit", function (event) {
     }
 
 });
+
+function leerCoordenadasDecimales() {
+    const partes = campoCoordenadas.value.split(",");
+
+    if (partes.length !== 2) {
+        return null;
+    }
+
+    const latitud = Number(partes[0].trim());
+    const longitud = Number(partes[1].trim());
+
+    if (Number.isNaN(latitud) || Number.isNaN(longitud)) {
+        return null;
+    }
+
+    return {
+        latitud: latitud,
+        longitud: longitud
+    };
+}
+
+function generarEnlaceMapa() {
+    let coordenadas = leerCoordenadasDecimales();
+
+    if (coordenadas === null) {
+        coordenadas = leerCoordenadasDMS();
+    }
+
+    if (coordenadas === null) {
+        listaErrores.innerHTML = "";
+
+        const error = document.createElement("li");
+        error.textContent =
+            "Las coordenadas GPS no tienen un formato válido.";
+
+        listaErrores.appendChild(error);
+        modalErrores.showModal();
+
+        return;
+    }
+
+    const latitud = Number(coordenadas.latitud.toFixed(4));
+    const longitud = Number(coordenadas.longitud.toFixed(4));
+
+    campoMapa.value =
+        "https://maps.google.com/maps?q=" +
+        latitud + "," +
+        longitud;
+}
+
+botonGenerarMapa.addEventListener("click", generarEnlaceMapa);
+
+function convertirDMSaDecimal(grados, minutos, segundos, direccion) {
+    let decimal = grados + minutos / 60 + segundos / 3600;
+
+    if (direccion === "S" || direccion === "O" || direccion === "W") {
+        decimal = -decimal;
+    }
+
+    return decimal;
+}
+
+function leerUnaCoordenadaDMS(texto) {
+    const textoLimpio = texto
+        .replaceAll("°", " ")
+        .replaceAll("º", " ")
+        .replaceAll("'", " ")
+        .replaceAll('"', " ")
+        .trim();
+
+    const partes = textoLimpio.split(" ").filter(parte => parte !== "");
+
+    if (partes.length !== 4) {
+        return null;
+    }
+
+    const direccion = partes[0].toUpperCase();
+    const grados = Number(partes[1]);
+    const minutos = Number(partes[2]);
+    const segundos = Number(partes[3]);
+
+    if (
+        Number.isNaN(grados) ||
+        Number.isNaN(minutos) ||
+        Number.isNaN(segundos)
+    ) {
+        return null;
+    }
+
+    return {
+        direccion: direccion,
+        grados: grados,
+        minutos: minutos,
+        segundos: segundos
+    };
+}
+
+function leerCoordenadasDMS() {
+    const partes = campoCoordenadas.value.split(",");
+
+    if (partes.length !== 2) {
+        return null;
+    }
+
+    const latitudDMS = leerUnaCoordenadaDMS(partes[0].trim());
+    const longitudDMS = leerUnaCoordenadaDMS(partes[1].trim());
+
+    if (latitudDMS === null || longitudDMS === null) {
+        return null;
+    }
+
+    const latitud = convertirDMSaDecimal(
+        latitudDMS.grados,
+        latitudDMS.minutos,
+        latitudDMS.segundos,
+        latitudDMS.direccion
+    );
+
+    const longitud = convertirDMSaDecimal(
+        longitudDMS.grados,
+        longitudDMS.minutos,
+        longitudDMS.segundos,
+        longitudDMS.direccion
+    );
+
+    return {
+        latitud: latitud,
+        longitud: longitud
+    };
+}
