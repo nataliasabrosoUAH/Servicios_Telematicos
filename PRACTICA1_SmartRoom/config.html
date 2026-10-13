@@ -14,7 +14,7 @@
             <h1>Configuración de la Smart Room</h1>
         </header>
 
-        <form class="form-config">
+        <form class="form-config" id="formConfig" novalidate>
 
         <div class="columna-izquierda">
 
@@ -44,6 +44,8 @@
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password">
 
+            <p id="indicadorPassword">Evaluación de longitud: insuficiente (0 caracteres)</p>
+
         </div>
 
             <div class="columna-derecha">
@@ -66,6 +68,9 @@
                 <input type="checkbox" id="movimiento" name="sensores" value="movimiento">
                 <label for="movimiento">Movimiento</label>
             </fieldset>
+            
+            <label for="tempActual">Temperatura actual:</label>
+            <input type="number" id="tempActual" name="tempActual" step="0.1" required>
 
             <label for="tempMax">Temperatura máxima:</label>
             <input type="number" id="tempMax" name="tempMax" min="-20" max="45" step="1">
@@ -79,6 +84,12 @@
             <button type="submit">Guardar configuración</button>
             </div>
         </form>
+
+        <dialog id="modalErrores">
+            <h2>Revisa los datos</h2>
+            <ul id="listaErrores"></ul>
+            <button type="button" id="cerrarModal">Aceptar</button>
+        </dialog>
 
         <a href="index.html">Volver a la página principal</a>
     </main>
