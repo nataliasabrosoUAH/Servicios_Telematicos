@@ -1,5 +1,7 @@
 const formulario = document.getElementById("formConfig");
 const campoPais = document.getElementById("pais");
+const campoCiudad = document.getElementById("ciudad");
+const campoLocalizacion = document.getElementById("localizacion");
 const listaPaises = document.getElementById("paises");
 const campoTempActual = document.getElementById("tempActual");
 const campoPassword = document.getElementById("password");
@@ -16,6 +18,66 @@ const campoMapa = document.getElementById("mapa");
 const botonGenerarMapa = document.getElementById("generarMapa");
 const enlaceMapa = document.getElementById("abrirMapa");
 
+const sensores = document.querySelectorAll(
+    'input[name="sensores"]'
+);
+
+function guardarConfiguracion() {
+    const sensoresSeleccionados = [];
+
+    for (const sensor of sensores) {
+        if (sensor.checked) {
+            sensoresSeleccionados.push(sensor.value);
+        }
+    }
+    const configuracion = {
+        pais: campoPais.value,
+        ciudad: campoCiudad.value,
+        localizacion: campoLocalizacion.value,
+        coordenadas: campoCoordenadas.value,
+        mapa: campoMapa.value,
+        temperaturaActual: campoTempActual.value,
+        temperaturaMaxima: campoTempMax.value,
+        temperaturaMinima: campoTempMin.value,
+        sensores: sensoresSeleccionados
+    };
+
+    localStorage.setItem(
+        "configuracionSmartRoom",
+        JSON.stringify(configuracion)
+    );
+}
+
+function cargarConfiguracion() {
+    const datosGuardados = localStorage.getItem("configuracionSmartRoom");
+
+    if (datosGuardados === null) {
+        return;
+    }
+
+    const configuracion = JSON.parse(datosGuardados);
+
+    campoPais.value = configuracion.pais;
+    campoCiudad.value = configuracion.ciudad;
+    campoLocalizacion.value = configuracion.localizacion;
+    campoCoordenadas.value = configuracion.coordenadas;
+    campoMapa.value = configuracion.mapa;
+    campoTempActual.value = configuracion.temperaturaActual;
+    campoTempMax.value = configuracion.temperaturaMaxima;
+    campoTempMin.value = configuracion.temperaturaMinima;
+
+    if (Array.isArray(configuracion.sensores)) {
+    for (const sensor of sensores) {
+        sensor.checked = configuracion.sensores.includes(sensor.value);
+    }
+}
+
+    if (configuracion.mapa !== "") {
+        enlaceMapa.href = configuracion.mapa;
+        enlaceMapa.hidden = false;
+    }
+}
+cargarConfiguracion();
 function paisValido() {
     const paisIntroducido = campoPais.value.trim().toLowerCase();
 
@@ -130,6 +192,8 @@ formulario.addEventListener("submit", function (event) {
         modalErrores.showModal();
 
     } else if (temperaturaFueraDeRango()) {
+        guardarConfiguracion();
+
         listaErrores.innerHTML = "";
 
         const aviso = document.createElement("li");
@@ -139,6 +203,8 @@ formulario.addEventListener("submit", function (event) {
         modalErrores.showModal();
 
     } else {
+        guardarConfiguracion();
+
         listaErrores.innerHTML = "";
 
         const mensaje = document.createElement("li");
