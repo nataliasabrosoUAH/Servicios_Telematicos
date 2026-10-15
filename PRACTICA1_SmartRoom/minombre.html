@@ -23,6 +23,7 @@
     <input type="text" id="correo" name="correo">
     <button type="button" id="validarCorreo">Validar correo</button>
     <button type="button" id="validarCorreoRegex">Validar con expresión regular</button>
+    <p id="resultadoCorreo" aria-live="polite"></p>
     </form>
     <a href="index.html">Volver a la página principal</a>
 </main>
@@ -32,6 +33,7 @@
     const campoCorreo = document.getElementById("correo");
     const botonValidar = document.getElementById("validarCorreo");
     const botonValidarRegex = document.getElementById("validarCorreoRegex");
+    const resultadoCorreo = document.getElementById("resultadoCorreo");
 
 const nombreGuardado = localStorage.getItem("fname");
 
@@ -49,36 +51,48 @@ if (nombreGuardado) {
         window.location.href = "index.html";
     });
     botonValidar.addEventListener("click", function() {
-        const correo = campoCorreo.value.trim();
-        const partes = correo.split("@");
-        const usuario = partes[0];
-        const dominio = partes[1];  
-        console.log(correo);
-       if (correo.includes("@") &&
-    correo.indexOf("@") === correo.lastIndexOf("@") &&
-   usuario !== "" &&
-!usuario.startsWith(".") &&
-!usuario.endsWith(".") &&
-!usuario.includes("..") &&
-dominio !== "" &&
-    dominio.includes(".") &&
-    !dominio.startsWith(".") &&
-    !dominio.endsWith(".") &&
-    !dominio.includes("..") &&
-    !correo.includes(" ")) {
-            console.log("El correo cumple las condiciones");
-            } else {
+    const correo = campoCorreo.value.trim();
+    const partes = correo.split("@");
+    const usuario = partes[0];
+    const dominio = partes[1];
+
+    console.log(correo);
+
+    if (correo.includes("@") &&
+        correo.indexOf("@") === correo.lastIndexOf("@") &&
+        usuario !== "" &&
+        !usuario.startsWith(".") &&
+        !usuario.endsWith(".") &&
+        !usuario.includes("..") &&
+        dominio !== "" &&
+        dominio.includes(".") &&
+        !dominio.startsWith(".") &&
+        !dominio.endsWith(".") &&
+        !dominio.includes("..") &&
+        !correo.includes(" ")) {
+
+        console.log("El correo cumple las condiciones");
+        resultadoCorreo.textContent = "✅ Correo electrónico válido";
+        resultadoCorreo.style.color = "green";
+
+    } else {
         console.log("El correo no cumple las condiciones");
-   }
-        });
+        resultadoCorreo.textContent = "❌ Correo electrónico no válido";
+        resultadoCorreo.style.color = "red";
+    }
+});
        botonValidarRegex.addEventListener("click", function() {
     const correo = campoCorreo.value.trim();
     const expresion = /^[^\s@.]+(?:\.[^\s@.]+)*@[^\s@.]+(?:\.[^\s@.]+)+$/;
 
     if (expresion.test(correo)) {
         console.log("El correo es válido con expresión regular");
+        resultadoCorreo.textContent = "✅ Correo electrónico válido";
+        resultadoCorreo.style.color = "green";
     } else {
         console.log("El correo no es válido con expresión regular");
+        resultadoCorreo.textContent = "❌ Correo electrónico no válido";
+        resultadoCorreo.style.color = "red";
     }
 });
 </script>
