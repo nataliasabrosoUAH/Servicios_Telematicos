@@ -96,9 +96,45 @@
                 <output id="diferencia" name="diferencia"></output>
 
                 <button type="submit">Guardar configuración</button>
+                <button type="button" id="restablecerConfig">
+                    Restablecer configuración
+                </button>
             </div>
         </form>
+        <section id="resumenConfiguracion" hidden>
+            <h2>Resumen de configuración</h2>
 
+            <p><strong>País:</strong> <span id="resumenPais"></span></p>
+            <p><strong>Ciudad:</strong> <span id="resumenCiudad"></span></p>
+            <p><strong>Localización:</strong> <span id="resumenLocalizacion"></span></p>
+
+            <p>
+                <strong>Temperatura actual:</strong>
+                <span id="resumenTempActual"></span> ºC
+            </p>
+
+            <p>
+                <strong>Temperatura máxima:</strong>
+                <span id="resumenTempMax"></span> ºC
+            </p>
+
+            <p>
+                <strong>Temperatura mínima:</strong>
+                <span id="resumenTempMin"></span> ºC
+            </p>
+
+            <p>
+                <strong>Sensores activos:</strong>
+                <span id="resumenSensores"></span>
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                <a id="resumenMapa" href="#" target="_blank">
+                    Abrir en Google Maps
+                </a>
+            </p>
+        </section>
         <dialog id="modalErrores">
             <h2>Revisa los datos</h2>
             <ul id="listaErrores"></ul>

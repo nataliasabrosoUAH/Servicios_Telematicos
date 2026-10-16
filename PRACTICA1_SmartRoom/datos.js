@@ -1,4 +1,6 @@
 const formulario = document.getElementById("formConfig");
+const botonRestablecer =
+    document.getElementById("restablecerConfig");
 const campoPais = document.getElementById("pais");
 const campoCiudad = document.getElementById("ciudad");
 const campoLocalizacion = document.getElementById("localizacion");
@@ -22,6 +24,33 @@ const botonUsarUbicacion = document.getElementById("usarUbicacion");
 const sensores = document.querySelectorAll(
     'input[name="sensores"]'
 );
+
+const resumenConfiguracion =
+    document.getElementById("resumenConfiguracion");
+
+const resumenPais =
+    document.getElementById("resumenPais");
+
+const resumenCiudad =
+    document.getElementById("resumenCiudad");
+
+const resumenLocalizacion =
+    document.getElementById("resumenLocalizacion");
+
+const resumenTempActual =
+    document.getElementById("resumenTempActual");
+
+const resumenTempMax =
+    document.getElementById("resumenTempMax");
+
+const resumenTempMin =
+    document.getElementById("resumenTempMin");
+
+const resumenSensores =
+    document.getElementById("resumenSensores");
+
+const resumenMapa =
+    document.getElementById("resumenMapa");
 
 function guardarConfiguracion() {
     const sensoresSeleccionados = [];
@@ -79,6 +108,68 @@ function cargarConfiguracion() {
     }
 }
 cargarConfiguracion();
+
+function mostrarResumenConfiguracion() {
+    resumenPais.textContent = campoPais.value;
+    resumenCiudad.textContent = campoCiudad.value;
+    resumenLocalizacion.textContent = campoLocalizacion.value;
+
+    resumenTempActual.textContent = campoTempActual.value;
+    resumenTempMax.textContent = campoTempMax.value;
+    resumenTempMin.textContent = campoTempMin.value;
+
+    const sensoresActivos = [];
+
+    for (const sensor of sensores) {
+        if (sensor.checked) {
+            sensoresActivos.push(sensor.value);
+        }
+    }
+
+    if (sensoresActivos.length > 0) {
+        resumenSensores.textContent =
+            sensoresActivos.join(", ");
+    } else {
+        resumenSensores.textContent =
+            "Ninguno";
+    }
+
+    if (campoMapa.value !== "") {
+        resumenMapa.href = campoMapa.value;
+        resumenMapa.hidden = false;
+    } else {
+        resumenMapa.hidden = true;
+    }
+
+    resumenConfiguracion.hidden = false;
+}
+
+function restablecerConfiguracion() {
+    const confirmar = confirm(
+        "¿Seguro que quieres eliminar la configuración guardada?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    localStorage.removeItem("configuracionSmartRoom");
+
+    formulario.reset();
+
+    campoMapa.value = "";
+    enlaceMapa.href = "#";
+    enlaceMapa.hidden = true;
+
+    indicadorPassword.textContent =
+        "Evaluación de longitud: insuficiente (0 caracteres)";
+}
+
+botonRestablecer.addEventListener(
+    "click",
+    restablecerConfiguracion
+);
+
 function paisValido() {
     const paisIntroducido = campoPais.value.trim().toLowerCase();
 
