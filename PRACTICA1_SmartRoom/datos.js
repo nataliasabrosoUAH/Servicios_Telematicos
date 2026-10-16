@@ -17,6 +17,7 @@ const campoCoordenadas = document.getElementById("coordenadas");
 const campoMapa = document.getElementById("mapa");
 const botonGenerarMapa = document.getElementById("generarMapa");
 const enlaceMapa = document.getElementById("abrirMapa");
+const botonUsarUbicacion = document.getElementById("usarUbicacion");
 
 const sensores = document.querySelectorAll(
     'input[name="sensores"]'
@@ -290,6 +291,49 @@ function generarEnlaceMapa() {
 }
 
 botonGenerarMapa.addEventListener("click", generarEnlaceMapa);
+
+function obtenerUbicacionActual() {
+    if (!navigator.geolocation) {
+        listaErrores.innerHTML = "";
+
+        const error = document.createElement("li");
+        error.textContent =
+            "La geolocalización no está disponible en este navegador.";
+
+        listaErrores.appendChild(error);
+        modalErrores.showModal();
+
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function (posicion) {
+            const latitud = posicion.coords.latitude.toFixed(6);
+            const longitud = posicion.coords.longitude.toFixed(6);
+
+            campoCoordenadas.value =
+                latitud + ", " + longitud;
+
+            generarEnlaceMapa();
+        },
+
+        function () {
+            listaErrores.innerHTML = "";
+
+            const error = document.createElement("li");
+            error.textContent =
+                "No se ha podido obtener la ubicación actual.";
+
+            listaErrores.appendChild(error);
+            modalErrores.showModal();
+        }
+    );
+}
+
+botonUsarUbicacion.addEventListener(
+    "click",
+    obtenerUbicacionActual
+);
 
 function convertirDMSaDecimal(grados, minutos, segundos, direccion) {
     let decimal = grados + minutos / 60 + segundos / 3600;
