@@ -106,6 +106,7 @@ function cargarConfiguracion() {
         enlaceMapa.href = configuracion.mapa;
         enlaceMapa.hidden = false;
     }
+    mostrarResumenConfiguracion();
 }
 cargarConfiguracion();
 
@@ -163,6 +164,8 @@ function restablecerConfiguracion() {
 
     indicadorPassword.textContent =
         "Evaluación de longitud: insuficiente (0 caracteres)";
+
+    resumenConfiguracion.hidden = true;
 }
 
 botonRestablecer.addEventListener(
@@ -285,7 +288,7 @@ formulario.addEventListener("submit", function (event) {
 
     } else if (temperaturaFueraDeRango()) {
         guardarConfiguracion();
-
+        mostrarResumenConfiguracion();
         listaErrores.innerHTML = "";
 
         const aviso = document.createElement("li");
@@ -296,7 +299,7 @@ formulario.addEventListener("submit", function (event) {
 
     } else {
         guardarConfiguracion();
-
+        mostrarResumenConfiguracion();
         listaErrores.innerHTML = "";
 
         const mensaje = document.createElement("li");
