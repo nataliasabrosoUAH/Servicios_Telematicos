@@ -16,6 +16,7 @@
     <h2>Operaciones y conversiones</h2>
 
     <p class="etiqueta-display">Temperatura original</p>
+    <p id="expresion" class="expresion-calculadora" aria-live="polite"></p>
     <div class="pantalla-calculadora">
         <input type="text" id="pantalla" value="0" readonly>
         <span id="unidadPantalla">°C</span>
@@ -26,6 +27,7 @@
         <input type="text" id="pantallaResultado" value="0" readonly>
         <span id="unidadResultado">°C</span>
     </div>
+    <p id="infoConfort" class="info-confort" aria-live="polite"></p>
 
 <div class="botones-calculadora">
     <button type="button" class="numero">7</button>
@@ -39,6 +41,8 @@
     <button type="button" class="numero">3</button>
     <button type="button" class="numero">0</button>
     <button type="button" id="borrar">C</button>
+    <button type="button" id="retroceso" aria-label="Borrar último dígito">⌫</button>
+    <button type="button" id="signo" aria-label="Cambiar signo">±</button>
     <button type="button" id="decimal">.</button>
     <button type="button" id="sumar">+</button>
     <button type="button" id="restar">-</button>
@@ -69,10 +73,24 @@
 </div>
 
 <button type="button" id="convertir">Convertir</button>
+<button type="button" id="intercambiar" aria-label="Intercambiar unidades">⇄</button>
+<button type="button" id="usarResultado">Usar resultado</button>
 <p>
     <a href="index.html">Volver a la página principal</a>
 </p>
 </section>
+
+<section class="seccion-historial">
+    <h2>Historial</h2>
+    <ul id="historial"></ul>
+    <button type="button" id="borrarHistorial">Borrar historial</button>
+</section>
+
+<dialog id="modalCalculadora">
+    <h2>Aviso</h2>
+    <p id="mensajeModal"></p>
+    <button type="button" id="cerrarModal">Aceptar</button>
+</dialog>
 </main>
 <script>
    const pantalla = document.getElementById("pantalla");
@@ -92,76 +110,164 @@ let operacion = "";
 const botonIgual = document.getElementById("igual");
 const unidadDestino = document.getElementById("unidadDestino");
 const botonConvertir = document.getElementById("convertir");
+// ----- Elementos nuevos -----
+const expresion = document.getElementById("expresion");
+const infoConfort = document.getElementById("infoConfort");
+const botonRetroceso = document.getElementById("retroceso");
+const botonSigno = document.getElementById("signo");
+const botonIntercambiar = document.getElementById("intercambiar");
+const botonUsarResultado = document.getElementById("usarResultado");
+const listaHistorial = document.getElementById("historial");
+const botonBorrarHistorial = document.getElementById("borrarHistorial");
+const modal = document.getElementById("modalCalculadora");
+const mensajeModal = document.getElementById("mensajeModal");
+const cerrarModal = document.getElementById("cerrarModal");
+
+// true = el siguiente número que se escriba empieza de cero
+let reiniciarPantalla = false;
+
+// Símbolos para mostrar la operación y las unidades
+const SIMBOLOS = { suma: "+", resta: "−", multiplicacion: "×", division: "÷" };
+const UNIDADES = { C: "°C", K: "K", F: "°F" };
+
+// Ventana modal (sustituye a alert)
+function mostrarModal(mensaje) {
+    mensajeModal.textContent = mensaje;
+    modal.showModal();
+}
+
+cerrarModal.addEventListener("click", function() {
+    modal.close();
+});
+// ----- Escribir números -----
+function escribirDigito(numero) {
+    if (reiniciarPantalla || pantalla.value === "0" || pantalla.value === "Error") {
+        pantalla.value = numero;
+        reiniciarPantalla = false;
+    } else if (pantalla.value === "-0") {
+        pantalla.value = "-" + numero;
+    } else {
+        pantalla.value += numero;
+    }
+}
 
 botonesNumeros.forEach(function(boton) {
     boton.addEventListener("click", function() {
-        const numero = boton.textContent;
-       if (pantalla.value === "0" || pantalla.value === "Error") {
-    pantalla.value = numero;
-} else {
-    pantalla.value += numero;
-}
-
+        escribirDigito(boton.textContent);
     });
 });
-botonBorrar.addEventListener("click", function() {
-    pantalla.value = "0";
-    pantallaResultado.value = "0";
-    unidadResultado.textContent = unidadPantalla.textContent;
-    primerNumero = 0;
-    operacion = "";
-});
-botonDecimal.addEventListener("click", function() {
-    if (!pantalla.value.includes(".")) {
+
+// ----- Punto decimal -----
+function escribirDecimal() {
+    if (reiniciarPantalla || pantalla.value === "Error") {
+        pantalla.value = "0.";
+        reiniciarPantalla = false;
+    } else if (!pantalla.value.includes(".")) {
         pantalla.value += ".";
     }
-});
-botonSumar.addEventListener("click", function() {
-    primerNumero = Number(pantalla.value);
-    operacion = "suma";
-    pantalla.value = "0";
-});
-botonRestar.addEventListener("click", function() {
-    primerNumero = Number(pantalla.value);
-    operacion = "resta";
-    pantalla.value = "0";
-});
-botonMultiplicar.addEventListener("click", function() {
-    primerNumero = Number(pantalla.value);
-    operacion = "multiplicacion";
-    pantalla.value = "0";
-});
-botonDividir.addEventListener("click", function() {
-    primerNumero = Number(pantalla.value);
-    operacion = "division";
-    pantalla.value = "0";
-});
-botonIgual.addEventListener("click", function() {
-    let segundoNumero = Number(pantalla.value);
-    let resultado;
-    if (operacion === "") {
-    return;
 }
+botonDecimal.addEventListener("click", escribirDecimal);
 
-  if (operacion === "suma") {
-    resultado = primerNumero + segundoNumero;
-} else if (operacion === "resta") {
-    resultado = primerNumero - segundoNumero;
-} else if (operacion === "multiplicacion") {
-    resultado = primerNumero * segundoNumero;
-} else if (operacion === "division") {
-    if (segundoNumero === 0) {
-        pantalla.value = "Error";
-        primerNumero = 0;
-        operacion = "";
+// ----- ± : cambiar signo (temperaturas negativas) -----
+botonSigno.addEventListener("click", function() {
+    if (pantalla.value === "Error") {
         return;
+    }
+    if (reiniciarPantalla) {
+        pantalla.value = "-0";
+        reiniciarPantalla = false;
+    } else if (pantalla.value.startsWith("-")) {
+        pantalla.value = pantalla.value.substring(1);
     } else {
+        pantalla.value = "-" + pantalla.value;
+    }
+});
+
+// ----- ⌫ : borrar el último dígito -----
+function borrarUltimo() {
+    if (reiniciarPantalla || pantalla.value === "Error") {
+        return;
+    }
+    let texto = pantalla.value.slice(0, -1);
+    if (texto === "" || texto === "-") {
+        texto = "0";
+    }
+    pantalla.value = texto;
+}
+botonRetroceso.addEventListener("click", borrarUltimo);
+// ----- C : borrar todo -----
+function borrarTodo() {
+    pantalla.value = "0";
+    pantallaResultado.value = "0";
+    unidadResultado.textContent = UNIDADES[unidadDestino.value];
+    expresion.textContent = "";
+    infoConfort.textContent = "";
+    primerNumero = 0;
+    operacion = "";
+    reiniciarPantalla = false;
+}
+botonBorrar.addEventListener("click", borrarTodo);
+// ----- Hacer la operación pendiente -----
+// Devuelve true si ha ido bien
+function calcular() {
+    if (operacion === "") {
+        return false;
+    }
+    const segundoNumero = Number(pantalla.value);
+    let resultado;
+
+    if (operacion === "suma") {
+        resultado = primerNumero + segundoNumero;
+    } else if (operacion === "resta") {
+        resultado = primerNumero - segundoNumero;
+    } else if (operacion === "multiplicacion") {
+        resultado = primerNumero * segundoNumero;
+    } else if (operacion === "division") {
+        if (segundoNumero === 0) {
+            pantalla.value = "Error";
+            expresion.textContent = "";
+            primerNumero = 0;
+            operacion = "";
+            reiniciarPantalla = true;
+            mostrarModal("No se puede dividir entre 0.");
+            return false;
+        }
         resultado = primerNumero / segundoNumero;
     }
+
+    resultado = Number(resultado.toFixed(2));
+    expresion.textContent = primerNumero + " " + SIMBOLOS[operacion] + " " + segundoNumero + " =";
+    agregarHistorial(primerNumero + " " + SIMBOLOS[operacion] + " " + segundoNumero +
+        " = " + resultado + " " + unidadPantalla.textContent);
+
+    pantalla.value = resultado;
+    operacion = "";
+    reiniciarPantalla = true;
+    return true;
 }
 
-pantalla.value = Number(resultado.toFixed(2));
-});
+//  Pulsar + − × ÷ 
+function elegirOperacion(nuevaOperacion) {
+    if (pantalla.value === "Error") {
+        return;
+    }
+    // Si ya había una operación y se ha escrito el 2º número, se calcula antes
+    if (operacion !== "" && !reiniciarPantalla) {
+        if (!calcular()) {
+            return;
+        }
+    }
+    primerNumero = Number(pantalla.value);
+    operacion = nuevaOperacion;
+    reiniciarPantalla = true;
+    expresion.textContent = primerNumero + " " + SIMBOLOS[operacion];
+}
+
+botonSumar.addEventListener("click", function() { elegirOperacion("suma"); });
+botonRestar.addEventListener("click", function() { elegirOperacion("resta"); });
+botonMultiplicar.addEventListener("click", function() { elegirOperacion("multiplicacion"); });
+botonDividir.addEventListener("click", function() { elegirOperacion("division"); });
+botonIgual.addEventListener("click", calcular);
 
 unidad.addEventListener("change", function() {
     if (unidad.value === "C") {
@@ -172,59 +278,163 @@ unidad.addEventListener("change", function() {
         unidadPantalla.textContent = "°F";
     }
 });
-botonConvertir.addEventListener("click", function() {
-    let temperatura = Number(pantalla.value);
+// ----- Conversión: origen → Kelvin → destino -----
+function aKelvin(valor, unidadOrigen) {
+    if (unidadOrigen === "C") {
+        return valor + 273.15;
+    } else if (unidadOrigen === "F") {
+        return (valor - 32) / 1.8 + 273.15;
+    }
+    return valor;   // ya está en Kelvin
+}
 
-    // Comprobar el cero absoluto
-    if (
-        (unidad.value === "C" && temperatura < -273.15) ||
-        (unidad.value === "K" && temperatura < 0) ||
-        (unidad.value === "F" && temperatura < -459.67)
-    ) {
-        alert("Error: temperatura inferior al cero absoluto");
+function desdeKelvin(kelvin, unidadFinal) {
+    if (unidadFinal === "C") {
+        return kelvin - 273.15;
+    } else if (unidadFinal === "F") {
+        return (kelvin - 273.15) * 1.8 + 32;
+    }
+    return kelvin;
+}
+
+// Indica si está en el intervalo de la Smart Room (22–26 °C)
+function mostrarConfort(celsius) {
+    if (celsius < 22) {
+        infoConfort.textContent = "🔵 Por debajo del intervalo recomendado (22–26 °C)";
+    } else if (celsius > 26) {
+        infoConfort.textContent = "🔴 Por encima del intervalo recomendado (22–26 °C)";
+    } else {
+        infoConfort.textContent = "🟢 Dentro del intervalo recomendado (22–26 °C)";
+    }
+}
+
+function convertir() {
+    if (pantalla.value === "Error") {
+        return;
+    }
+    const temperatura = Number(pantalla.value);
+    const kelvin = aKelvin(temperatura, unidad.value);
+
+    // Cero absoluto (0 K): no puede haber nada por debajo
+    if (kelvin < -0.000001) {
+        mostrarModal("Error: " + temperatura + " " + UNIDADES[unidad.value] +
+            " es inferior al cero absoluto.");
         return;
     }
 
-    //comprobar si las unidades son iguales
-    if (unidad.value === unidadDestino.value) {
-        pantallaResultado.value = temperatura;
-        unidadResultado.textContent = unidadPantalla.textContent;
-        return;
-    }
+    const resultado = Number(desdeKelvin(kelvin, unidadDestino.value).toFixed(2));
+    pantallaResultado.value = resultado;
+    unidadResultado.textContent = UNIDADES[unidadDestino.value];
+    mostrarConfort(kelvin - 273.15);
 
-    // A partir de aquí continúa código de conversiones
-    if (unidad.value === "C" && unidadDestino.value === "K") {
-        let resultado = temperatura + 273.15;
-        pantallaResultado.value = Number(resultado.toFixed(2));
-        unidadResultado.textContent = "K";
+    if (unidad.value !== unidadDestino.value) {
+        agregarHistorial(temperatura + " " + UNIDADES[unidad.value] + " → " +
+            resultado + " " + UNIDADES[unidadDestino.value]);
     }
-else if (unidad.value === "K" && unidadDestino.value === "C") {
-    let resultado = temperatura - 273.15;
-    pantallaResultado.value = Number(resultado.toFixed(2));
-    unidadResultado.textContent = "°C";
 }
 
-else if (unidad.value === "C" && unidadDestino.value === "F") {
-    let resultado = (temperatura * 1.8) + 32;
-    pantallaResultado.value = Number(resultado.toFixed(2));
-    unidadResultado.textContent = "°F";
-}
-else if (unidad.value === "F" && unidadDestino.value === "C") {
-    let resultado = (temperatura - 32) / 1.8;
-    pantallaResultado.value = Number(resultado.toFixed(2));
-    unidadResultado.textContent = "°C";
-}
-else if (unidad.value === "K" && unidadDestino.value === "F") {
-    let resultado = (temperatura - 273.15) * 1.8 + 32;
-    pantallaResultado.value = Number(resultado.toFixed(2));
-    unidadResultado.textContent = "°F";
-}
-else if (unidad.value === "F" && unidadDestino.value === "K") {
-    let resultado = (temperatura - 32) / 1.8 + 273.15;
-    pantallaResultado.value = Number(resultado.toFixed(2));
-    unidadResultado.textContent = "K";
-}
+botonConvertir.addEventListener("click", convertir);
+// ----- Al cambiar la unidad de destino se actualiza su símbolo -----
+unidadDestino.addEventListener("change", function() {
+    unidadResultado.textContent = UNIDADES[unidadDestino.value];
 });
+
+// ----- ⇄ : intercambiar unidades -----
+botonIntercambiar.addEventListener("click", function() {
+    const auxiliar = unidad.value;
+    unidad.value = unidadDestino.value;
+    unidadDestino.value = auxiliar;
+    unidadPantalla.textContent = UNIDADES[unidad.value];
+    unidadResultado.textContent = UNIDADES[unidadDestino.value];
+});
+
+// ----- Usar el resultado como temperatura original -----
+botonUsarResultado.addEventListener("click", function() {
+    pantalla.value = pantallaResultado.value;
+    unidad.value = unidadDestino.value;
+    unidadPantalla.textContent = UNIDADES[unidad.value];
+    operacion = "";
+    expresion.textContent = "";
+    reiniciarPantalla = true;
+});
+
+// ----- Historial (guardado en localStorage, últimas 8 entradas) -----
+function leerHistorial() {
+    try {
+        return JSON.parse(localStorage.getItem("historialCalculadora")) || [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function pintarHistorial() {
+    const historial = leerHistorial();
+    listaHistorial.innerHTML = "";
+    if (historial.length === 0) {
+        const vacio = document.createElement("li");
+        vacio.textContent = "Todavía no hay operaciones.";
+        listaHistorial.appendChild(vacio);
+        return;
+    }
+    for (const entrada of historial) {
+        const elemento = document.createElement("li");
+        elemento.textContent = entrada;
+        listaHistorial.appendChild(elemento);
+    }
+}
+
+function agregarHistorial(texto) {
+    const historial = leerHistorial();
+    historial.unshift(texto);          // lo más reciente arriba
+    if (historial.length > 8) {
+        historial.length = 8;
+    }
+    localStorage.setItem("historialCalculadora", JSON.stringify(historial));
+    pintarHistorial();
+}
+
+botonBorrarHistorial.addEventListener("click", function() {
+    localStorage.removeItem("historialCalculadora");
+    pintarHistorial();
+});
+
+// ----- Uso con el teclado -----
+document.addEventListener("keydown", function(event) {
+    const elemento = event.target.tagName;
+    if (elemento === "SELECT" || modal.open) {
+        return;
+    }
+    if (event.key === "Enter" && elemento === "BUTTON") {
+        return;   // el navegador ya pulsa el botón
+    }
+
+    const tecla = event.key;
+    if (tecla >= "0" && tecla <= "9") {
+        escribirDigito(tecla);
+    } else if (tecla === "." || tecla === ",") {
+        escribirDecimal();
+    } else if (tecla === "+") {
+        elegirOperacion("suma");
+    } else if (tecla === "-") {
+        elegirOperacion("resta");
+    } else if (tecla === "*") {
+        elegirOperacion("multiplicacion");
+    } else if (tecla === "/") {
+        elegirOperacion("division");
+    } else if (tecla === "Enter" || tecla === "=") {
+        calcular();
+    } else if (tecla === "Backspace") {
+        borrarUltimo();
+    } else if (tecla === "Escape") {
+        borrarTodo();
+    } else {
+        return;
+    }
+    event.preventDefault();
+});
+
+// ----- Al cargar la página -----
+pintarHistorial();
 </script>
 </body>
 </html>
