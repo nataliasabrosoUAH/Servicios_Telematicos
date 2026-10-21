@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de temperaturas - Smart Room</title>
+    <link rel="stylesheet" href="css/iroom.css">
+</head>
+<body>
+  <main class="main-calculadora">
+    <header>
+    <h1>Calculadora de temperaturas</h1>
+    </header>
+    <section class="seccion-calculadora">
+    <h2>Operaciones y conversiones</h2>
+
+    <p class="etiqueta-display">Temperatura original</p>
+    <div class="pantalla-calculadora">
+        <input type="text" id="pantalla" value="0" readonly>
+        <span id="unidadPantalla">°C</span>
+    </div>
+
+    <p class="etiqueta-display">Resultado de la conversión</p>
+    <div class="pantalla-calculadora">
+        <input type="text" id="pantallaResultado" value="0" readonly>
+        <span id="unidadResultado">°C</span>
+    </div>
+
+<div class="botones-calculadora">
+    <button type="button" class="numero">7</button>
+    <button type="button" class="numero">8</button>
+    <button type="button" class="numero">9</button>
+    <button type="button" class="numero">4</button>
+    <button type="button" class="numero">5</button>
+    <button type="button" class="numero">6</button>
+    <button type="button" class="numero">1</button>
+    <button type="button" class="numero">2</button>
+    <button type="button" class="numero">3</button>
+    <button type="button" class="numero">0</button>
+    <button type="button" id="borrar">C</button>
+    <button type="button" id="decimal">.</button>
+    <button type="button" id="sumar">+</button>
+    <button type="button" id="restar">-</button>
+    <button type="button" id="multiplicar">×</button>
+    <button type="button" id="dividir">÷</button>
+    <button type="button" id="igual">=</button>
+</div>
+<div class="conversion-temperatura">
+
+    <div class="campo-temperatura">
+        <label for="unidad">Unidad de temperatura:</label>
+        <select id="unidad">
+            <option value="C">Celsius (°C)</option>
+            <option value="K">Kelvin (K)</option>
+            <option value="F">Fahrenheit (°F)</option>
+        </select>
+    </div>
+
+    <div class="campo-temperatura">
+        <label for="unidadDestino">Convertir a:</label>
+        <select id="unidadDestino">
+            <option value="C">Celsius (°C)</option>
+            <option value="K">Kelvin (K)</option>
+            <option value="F">Fahrenheit (°F)</option>
+        </select>
+    </div>
+
+</div>
+
+<button type="button" id="convertir">Convertir</button>
+<p>
+    <a href="index.html">Volver a la página principal</a>
+</p>
+</section>
+</main>
+<script>
+   const pantalla = document.getElementById("pantalla");
+   const unidadPantalla = document.getElementById("unidadPantalla");
+   const pantallaResultado = document.getElementById("pantallaResultado");
+const unidadResultado = document.getElementById("unidadResultado");
+const unidad = document.getElementById("unidad");
+const botonesNumeros = document.querySelectorAll(".numero");
+const botonBorrar = document.getElementById("borrar");
+const botonDecimal = document.getElementById("decimal");
+const botonSumar = document.getElementById("sumar");
+const botonRestar = document.getElementById("restar");
+const botonMultiplicar = document.getElementById("multiplicar");
+const botonDividir = document.getElementById("dividir");
+let primerNumero = 0;
+let operacion = "";
+const botonIgual = document.getElementById("igual");
+const unidadDestino = document.getElementById("unidadDestino");
+const botonConvertir = document.getElementById("convertir");
+
+botonesNumeros.forEach(function(boton) {
+    boton.addEventListener("click", function() {
+        const numero = boton.textContent;
+       if (pantalla.value === "0" || pantalla.value === "Error") {
+    pantalla.value = numero;
+} else {
+    pantalla.value += numero;
+}
+
+    });
+});
+botonBorrar.addEventListener("click", function() {
+    pantalla.value = "0";
+    pantallaResultado.value = "0";
+    unidadResultado.textContent = unidadPantalla.textContent;
+    primerNumero = 0;
+    operacion = "";
+});
+botonDecimal.addEventListener("click", function() {
+    if (!pantalla.value.includes(".")) {
+        pantalla.value += ".";
+    }
+});
+botonSumar.addEventListener("click", function() {
+    primerNumero = Number(pantalla.value);
+    operacion = "suma";
+    pantalla.value = "0";
+});
+botonRestar.addEventListener("click", function() {
+    primerNumero = Number(pantalla.value);
+    operacion = "resta";
+    pantalla.value = "0";
+});
+botonMultiplicar.addEventListener("click", function() {
+    primerNumero = Number(pantalla.value);
+    operacion = "multiplicacion";
+    pantalla.value = "0";
+});
+botonDividir.addEventListener("click", function() {
+    primerNumero = Number(pantalla.value);
+    operacion = "division";
+    pantalla.value = "0";
+});
+botonIgual.addEventListener("click", function() {
+    let segundoNumero = Number(pantalla.value);
+    let resultado;
+    if (operacion === "") {
+    return;
+}
+
+  if (operacion === "suma") {
+    resultado = primerNumero + segundoNumero;
+} else if (operacion === "resta") {
+    resultado = primerNumero - segundoNumero;
+} else if (operacion === "multiplicacion") {
+    resultado = primerNumero * segundoNumero;
+} else if (operacion === "division") {
+    if (segundoNumero === 0) {
+        pantalla.value = "Error";
+        primerNumero = 0;
+        operacion = "";
+        return;
+    } else {
+        resultado = primerNumero / segundoNumero;
+    }
+}
+
+pantalla.value = Number(resultado.toFixed(2));
+});
+
+unidad.addEventListener("change", function() {
+    if (unidad.value === "C") {
+        unidadPantalla.textContent = "°C";
+    } else if (unidad.value === "K") {
+        unidadPantalla.textContent = "K";
+    } else if (unidad.value === "F") {
+        unidadPantalla.textContent = "°F";
+    }
+});
+botonConvertir.addEventListener("click", function() {
+    let temperatura = Number(pantalla.value);
+
+    // Comprobar el cero absoluto
+    if (
+        (unidad.value === "C" && temperatura < -273.15) ||
+        (unidad.value === "K" && temperatura < 0) ||
+        (unidad.value === "F" && temperatura < -459.67)
+    ) {
+        alert("Error: temperatura inferior al cero absoluto");
+        return;
+    }
+
+    //comprobar si las unidades son iguales
+    if (unidad.value === unidadDestino.value) {
+        pantallaResultado.value = temperatura;
+        unidadResultado.textContent = unidadPantalla.textContent;
+        return;
+    }
+
+    // A partir de aquí continúa código de conversiones
+    if (unidad.value === "C" && unidadDestino.value === "K") {
+        let resultado = temperatura + 273.15;
+        pantallaResultado.value = Number(resultado.toFixed(2));
+        unidadResultado.textContent = "K";
+    }
+else if (unidad.value === "K" && unidadDestino.value === "C") {
+    let resultado = temperatura - 273.15;
+    pantallaResultado.value = Number(resultado.toFixed(2));
+    unidadResultado.textContent = "°C";
+}
+
+else if (unidad.value === "C" && unidadDestino.value === "F") {
+    let resultado = (temperatura * 1.8) + 32;
+    pantallaResultado.value = Number(resultado.toFixed(2));
+    unidadResultado.textContent = "°F";
+}
+else if (unidad.value === "F" && unidadDestino.value === "C") {
+    let resultado = (temperatura - 32) / 1.8;
+    pantallaResultado.value = Number(resultado.toFixed(2));
+    unidadResultado.textContent = "°C";
+}
+else if (unidad.value === "K" && unidadDestino.value === "F") {
+    let resultado = (temperatura - 273.15) * 1.8 + 32;
+    pantallaResultado.value = Number(resultado.toFixed(2));
+    unidadResultado.textContent = "°F";
+}
+else if (unidad.value === "F" && unidadDestino.value === "K") {
+    let resultado = (temperatura - 32) / 1.8 + 273.15;
+    pantallaResultado.value = Number(resultado.toFixed(2));
+    unidadResultado.textContent = "K";
+}
+});
+</script>
+</body>
+</html>
