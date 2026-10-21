@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nombre - Smart Room</title>
+    <link rel="stylesheet" href="css/iroom.css">
+</head>
+
+<body>
+<main>
+    <header>
+        <h1>Introduce tu nombre</h1>
+    </header>
+
+    <form id="formNombre">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <button type="submit">Guardar nombre</button>
+
+    <label for="correo">Correo electrónico:</label>
+    <input type="text" id="correo" name="correo">
+    <button type="button" id="validarCorreo">Validar correo</button>
+    <button type="button" id="validarCorreoRegex">Validar con expresión regular</button>
+    <p id="resultadoCorreo" aria-live="polite"></p>
+    </form>
+    <a href="index.html">Volver a la página principal</a>
+</main>
+<script>
+    const formulario = document.getElementById("formNombre");
+    const campoNombre = document.getElementById("nombre");
+    const campoCorreo = document.getElementById("correo");
+    const botonValidar = document.getElementById("validarCorreo");
+    const botonValidarRegex = document.getElementById("validarCorreoRegex");
+    const resultadoCorreo = document.getElementById("resultadoCorreo");
+
+const nombreGuardado = localStorage.getItem("fname");
+
+if (nombreGuardado) {
+    campoNombre.value = nombreGuardado;
+}
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const nombre = campoNombre.value.trim();
+
+        localStorage.setItem("fname", nombre);
+
+        window.location.href = "index.html";
+    });
+    // ----- Validación SIN expresiones regulares -----
+function esLetra(caracter) {
+    const c = caracter.toLowerCase();
+    return c >= "a" && c <= "z";
+}
+
+function tieneEspacios(texto) {
+    for (const caracter of texto) {
+        if (caracter === " " || caracter === "\t" || caracter === "\n" || caracter === "\r") {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Devuelve { valido: true/false, motivo: "texto del error" }
+function validarCorreoSinRegex(correo) {
+    if (correo === "") {
+        return { valido: false, motivo: "El campo está vacío." };
+    }
+    if (tieneEspacios(correo)) {
+        return { valido: false, motivo: "No puede contener espacios." };
+    }
+    if (!correo.includes("@")) {
+        return { valido: false, motivo: "Falta el símbolo @." };
+    }
+    if (correo.indexOf("@") !== correo.lastIndexOf("@")) {
+        return { valido: false, motivo: "Solo puede haber una @." };
+    }
+
+    const posicionArroba = correo.indexOf("@");
+    const usuario = correo.substring(0, posicionArroba);
+    const dominio = correo.substring(posicionArroba + 1);
+
+    if (usuario === "") {
+        return { valido: false, motivo: "Falta el usuario antes de la @." };
+    }
+    if (usuario.startsWith(".") || usuario.endsWith(".") || usuario.includes("..")) {
+        return { valido: false, motivo: "El usuario tiene puntos mal colocados." };
+    }
+    if (dominio === "") {
+        return { valido: false, motivo: "Falta el dominio después de la @." };
+    }
+    if (!dominio.includes(".")) {
+        return { valido: false, motivo: "El dominio debe tener un punto (p. ej. gmail.com)." };
+    }
+
+    const partesDominio = dominio.split(".");
+    for (const parte of partesDominio) {
+        if (parte === "") {
+            return { valido: false, motivo: "El dominio tiene puntos mal colocados." };
+        }
+    }
+
+    const tld = partesDominio[partesDominio.length - 1];
+    if (tld.length < 2) {
+        return { valido: false, motivo: "La extensión (.es, .com…) debe tener al menos 2 letras." };
+    }
+    for (const caracter of tld) {
+        if (!esLetra(caracter)) {
+            return { valido: false, motivo: "La extensión solo puede contener letras." };
+        }
+    }
+
+    return { valido: true, motivo: "" };
+}
+
+// Muestra el resultado en el párrafo (lo usan los dos botones)
+function mostrarResultado(valido, metodo, motivo) {
+    if (valido) {
+        resultadoCorreo.textContent = "✅ Correo válido (" + metodo + ")";
+        resultadoCorreo.style.color = "green";
+    } else {
+        let texto = "❌ Correo no válido (" + metodo + ")";
+        if (motivo) {
+            texto += ": " + motivo;
+        }
+        resultadoCorreo.textContent = texto;
+        resultadoCorreo.style.color = "red";
+    }
+}
+
+botonValidar.addEventListener("click", function() {
+    const correo = campoCorreo.value.trim();
+    const resultado = validarCorreoSinRegex(correo);
+    console.log("Sin regex:", correo, resultado);
+    mostrarResultado(resultado.valido, "sin expresión regular", resultado.motivo);
+});
+   // ----- Validación CON expresión regular -----
+const expresionCorreo = /^[^\s@.]+(\.[^\s@.]+)*@([^\s@.]+\.)+[A-Za-z]{2,}$/;
+
+function validarCorreoRegex(correo) {
+    return expresionCorreo.test(correo);
+}
+
+botonValidarRegex.addEventListener("click", function() {
+    const correo = campoCorreo.value.trim();
+    const valido = validarCorreoRegex(correo);
+    console.log("Con regex:", correo, valido);
+    mostrarResultado(valido, "con expresión regular", "");
+});
+
+// Al escribir se borra el mensaje anterior
+campoCorreo.addEventListener("input", function() {
+    resultadoCorreo.textContent = "";
+});
+</script>
+</body>
+
+</html>

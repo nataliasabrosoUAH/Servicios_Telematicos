@@ -1,0 +1,406 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: #f3ece7;
+}
+main {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+header {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+footer {
+    grid-column: 1 /-1;
+    text-align: center;
+    padding: 15px;
+}
+nav {
+    grid-column: 1;
+    padding: 10px;
+}
+nav a {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+nav a:hover {
+    background-color: #eeeeee;
+}
+aside {
+    grid-column: 2;
+    padding: 10px;
+}
+h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 48px;
+    font-weight: bold;
+    color: #5f3f45;
+    letter-spacing: 0.5px;
+}
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+section {
+    padding: 20px;
+    background-color: #fffaf7;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+ul {
+    line-height: 1.6;
+}
+li {
+    margin-bottom: 8px;
+}
+img{
+    max-width: 100%;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.logo-uah {
+    width: 180px;
+    height: auto;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+a {
+    text-decoration: underline;
+    color: #7a4f57;
+}
+
+a:visited {
+    color: #7a4f57;
+}
+
+a:focus {
+    outline: 2px solid;
+    outline-offset: 2px;
+}
+.form-config {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+}
+
+.columna-izquierda {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.columna-derecha {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-config input[type="text"],
+.form-config input[type="url"],
+.form-config input[type="password"],
+.form-config input[type="number"],
+.form-config input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+fieldset legend {
+    grid-column: 1 / -1;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+output {
+    display: block;
+    min-height: 24px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+#formNombre {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    justify-self: center;
+    box-sizing: border-box;
+}
+
+#formNombre input {
+    padding: 8px;
+}
+
+main > a {
+    grid-column: 1 / -1;
+    margin: 10px 20px 20px;
+}
+#bienvenida {
+    background-color: #fffaf7;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+input:focus {
+    border: 2px solid #7a4f57;
+    outline: none;
+}
+details {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f3ece7;
+    border-radius: 8px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+.form-config,
+#formNombre {
+    background-color: #fffaf7;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.icono-titulo {
+    width: 30px;
+    height: auto;
+    margin: 0 8px 0 0;
+    border-radius: 0;
+    box-shadow: none;
+    vertical-align: middle;
+}
+#bienvenida-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fffaf7;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+#bienvenida-contenedor #bienvenida {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.icono-bienvenida {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.titulo-smartroom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding-top: 25px;
+}
+
+.titulo-smartroom img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.titulo-smartroom h1 {
+    margin: 0;
+}
+@media (max-width: 700px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    nav,
+    aside {
+        grid-column: 1;
+    }
+
+    .form-config {
+        grid-template-columns: 1fr;
+    }
+}
+
+.botones-calculadora button {
+    width: 100%;
+    height: 42px;
+    font-size: 20px;
+    background-color: #f3ece7;
+    color: #5f3f45;
+    border: 1px solid #cbb8b8;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.botones-calculadora button:hover {
+    background-color: #e5d5d5;
+}
+.conversion-temperatura {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto 10px;
+}
+
+.campo-temperatura {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-temperatura label {
+    font-size: 16px;
+    color: #5f3f45;
+}
+
+.campo-temperatura select {
+    padding: 10px;
+    border: 1px solid #cbb8b8;
+    border-radius: 6px;
+    background-color: #f3ece7;
+    width: 100%;
+min-width: 0;
+}
+#convertir {
+    background-color: #5f3f45;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#convertir:hover {
+    background-color: #79555d;
+}
+.seccion-calculadora {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 10 px 20px;
+}
+.botones-calculadora {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+}
+.pantalla-calculadora {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 8px auto;
+    padding: 6px 12px;
+    background-color: #f3ece7;
+    border: 1px solid #cbb8b8;
+    border-radius: 10px;
+}
+
+#pantalla {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 24px;
+    color: #5f3f45;
+    text-align: right;
+}
+
+#unidadPantalla {
+    font-size: 22px;
+    color: #5f3f45;
+    margin-left: 10px;
+}
+.seccion-calculadora #convertir {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 15px auto;
+}
+.main-calculadora {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.main-calculadora .seccion-calculadora {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+.main-calculadora h1 {
+    font-size: 32px;
+    color: #5f3f45;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.seccion-calculadora h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #5f3f45;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.expresion-calculadora {
+    min-height: 1.2em;
+    margin: 0 0 4px;
+    text-align: right;
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+.info-confort {
+    min-height: 1.2em;
+    font-weight: bold;
+}
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
