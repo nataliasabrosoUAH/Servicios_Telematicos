@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Smart Room</title>
+    <link rel="stylesheet" href="css/iroom.css">
+    <link rel="stylesheet" href="css/galeria.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+<main>
+    <header>
+        <h1>Galería de las estaciones</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="config.html">Configuración</a>
+        <a href="minombre.html">Nombre</a>
+        <a href="calculadora.html">Calculadora</a>
+        <a href="galeria.html">Galería</a>
+    </nav>
+
+    <section class="seccion-galeria">
+        <h2>Alrededores de las estaciones meteorológicas</h2>
+
+        <!-- Aquí las imágenes -->
+         <div class="tira-imagenes">
+            <figure class="foto" data-nombre="Alcalá de Henares">
+                <img src="images/galeria/alcala.jpg" alt="Plaza de Cervantes en Alcalá de Henares">
+            </figure>
+            <figure class="foto" data-nombre="Madrid">
+                <img src="images/galeria/madrid.jpg" alt="Vista de Madrid">
+            </figure>
+            <figure class="foto" data-nombre="Guadalajara">
+                <img src="images/galeria/guadalajara.jpg" alt="Campos de lavanda en Guadalajara">
+            </figure>
+            <figure class="foto" data-nombre="Barcelona">
+                <img src="images/galeria/barcelona.jpg" alt="Vista aérea de Barcelona">
+            </figure>
+            <figure class="foto" data-nombre="Valencia">
+                <img src="images/galeria/valencia.jpg" alt="Ciudad de las Artes y las Ciencias de Valencia">
+            </figure>
+            <figure class="foto" data-nombre="Sevilla">
+                <img src="images/galeria/sevilla.jpg" alt="Plaza de España de Sevilla">
+            </figure>
+            <figure class="foto" data-nombre="Granada">
+                <img src="images/galeria/granada.jpg" alt="La Alhambra de Granada">
+            </figure>
+            <figure class="foto" data-nombre="Málaga">
+                <img src="images/galeria/malaga.jpg" alt="Vista de Málaga">
+            </figure>
+            <figure class="foto" data-nombre="Cádiz">
+                <img src="images/galeria/cadiz.jpg" alt="Playa de la Caleta en Cádiz">
+            </figure>
+            <figure class="foto" data-nombre="Santander">
+                <img src="images/galeria/santander.jpg" alt="Costa de Cantabria">
+            </figure>
+        </div>
+
+    </section>
+
+    <a href="index.html">Volver a la página principal</a>
+</main>
+<div id="infoImagen">
+    <img src="" alt="">
+    <p></p>
+</div>
+<script>
+    $(document).ready(function () {
+
+        // Al entrar y al salir con el ratón de una foto
+        $(".foto").hover(
+            function () {
+                const nombre = $(this).data("nombre");
+                const ruta = $(this).find("img").attr("src");
+
+                $("#infoImagen img").attr("src", ruta).attr("alt", nombre);
+                $("#infoImagen p").text(nombre);
+                $("#infoImagen").stop(true, true).fadeIn(200);
+            },
+            function () {
+                $("#infoImagen").stop(true, true).fadeOut(150);
+            }
+        );
+
+        // El recuadro sigue al ratón
+        $(".foto").mousemove(function (evento) {
+            let x = evento.pageX + 20;
+            const y = evento.pageY + 20;
+
+            // Si se sale por la derecha, se pone a la izquierda del ratón
+            if (x + 340 > $(window).width()) {
+                x = evento.pageX - 360;
+            }
+
+            $("#infoImagen").css({ left: x, top: y });
+        });
+
+    });
+</script>
+</body>
+
+</html>
