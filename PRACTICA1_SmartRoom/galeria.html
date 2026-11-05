@@ -7,6 +7,7 @@
     <title>Galería - Smart Room</title>
     <link rel="stylesheet" href="css/iroom.css">
     <link rel="stylesheet" href="css/galeria.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
@@ -64,6 +65,43 @@
 
     <a href="index.html">Volver a la página principal</a>
 </main>
+<div id="infoImagen">
+    <img src="" alt="">
+    <p></p>
+</div>
+<script>
+    $(document).ready(function () {
+
+        // Al entrar y al salir con el ratón de una foto
+        $(".foto").hover(
+            function () {
+                const nombre = $(this).data("nombre");
+                const ruta = $(this).find("img").attr("src");
+
+                $("#infoImagen img").attr("src", ruta).attr("alt", nombre);
+                $("#infoImagen p").text(nombre);
+                $("#infoImagen").stop(true, true).fadeIn(200);
+            },
+            function () {
+                $("#infoImagen").stop(true, true).fadeOut(150);
+            }
+        );
+
+        // El recuadro sigue al ratón
+        $(".foto").mousemove(function (evento) {
+            let x = evento.pageX + 20;
+            const y = evento.pageY + 20;
+
+            // Si se sale por la derecha, se pone a la izquierda del ratón
+            if (x + 340 > $(window).width()) {
+                x = evento.pageX - 360;
+            }
+
+            $("#infoImagen").css({ left: x, top: y });
+        });
+
+    });
+</script>
 </body>
 
 </html>
