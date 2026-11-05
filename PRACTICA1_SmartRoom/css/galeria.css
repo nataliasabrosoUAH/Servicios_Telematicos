@@ -1,0 +1,29 @@
+/* ===== Estilos propios de la galería ===== */
+
+/* La tarjeta de la galería ocupa todo el ancho */
+.seccion-galeria {
+    grid-column: 1 / -1;
+}
+
+/* Tira de imágenes: en filas, y si no caben, bajan a la siguiente */
+.tira-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Cada foto */
+.foto {
+    margin: 0;
+    width: 200px;
+}
+
+.foto img {
+    display: block;
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+    margin-top: 0;
+    cursor: pointer;
+}
