@@ -26,6 +26,15 @@
                     <th>Color de iluminación</th>
 
                 </tr>
+
+                <tr>
+                    <th>Mostrar histograma</th>
+                    <th><input type="checkbox" class="checkboxHistograma" value="temperatura"></th>
+                    <th><input type="checkbox" class="checkboxHistograma" value="humedad"></th>
+                    <th><input type="checkbox" class="checkboxHistograma" value="ruido"></th>
+                    <th><input type="checkbox" class="checkboxHistograma" value="luz"></th>
+                    <th>-</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -273,6 +282,12 @@
         <a href="#" id="enlacePagina3">Página 3</a>
         <a href="#" id="enlacePagina4">Página 4</a>
     </div>
+
+    <div id="histograma">
+        <h2 id="tituloHistograma">Histograma</h2>
+        <div id="barraHistograma"></div>
+    </div>
+    
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="tablas.js"></script>
 </body>
