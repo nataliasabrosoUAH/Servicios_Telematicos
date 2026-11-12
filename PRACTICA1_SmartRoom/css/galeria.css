@@ -5,18 +5,31 @@
     grid-column: 1 / -1;
 }
 
-/* Tira de imágenes: en filas, y si no caben, bajan a la siguiente */
+/* Carrusel: flecha izquierda + ventana + flecha derecha, en línea */
+.carrusel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* La ventana solo deja ver una parte de la tira */
+.ventana {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Tira de imágenes: todas en una sola fila */
 .tira-imagenes {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 15px;
-    justify-content: center;
 }
 
 /* Cada foto */
 .foto {
     margin: 0;
     width: 200px;
+    flex-shrink: 0;
 }
 
 .foto img {
@@ -26,4 +39,54 @@
     object-fit: cover;
     margin-top: 0;
     cursor: pointer;
+}
+/* Recuadro que aparece al pasar el ratón */
+#infoImagen {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 320px;
+    padding: 10px;
+    background-color: #fffaf7;
+    border: 1px solid #cbb8b8;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+/* Flechas del carrusel */
+.flecha {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin-top: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #5f3f45;
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.flecha:hover {
+    background-color: #79555d;
+}
+
+/* Flecha desactivada: cuando no hay más fotos hacia ese lado */
+.flecha:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+#infoImagen img {
+    width: 100%;
+    margin-top: 0;
+}
+
+#infoImagen p {
+    margin: 8px 0 0;
+    text-align: center;
+    font-weight: bold;
+    color: #5f3f45;
 }
