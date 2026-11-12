@@ -15,6 +15,19 @@ $(document).ready(function () {
         $(".checkboxHistograma").not(this).prop("checked", false);
 
         if ($(this).is(":checked")) {
+            let tipo = $(this).val();
+            $("#tituloHistograma").text(tipo);
+
+            let columna;
+            if(tipo == "temperatura") {
+                columna = 2;
+            } else if(tipo == "humedad"){
+                columna = 3;
+            } else if(tipo == "ruido"){
+                columna = 4;
+            }else if(tipo == "luz"){
+                columna = 5;
+            }
             $("#histograma").show();
         } else {
             $("#histograma").hide();
