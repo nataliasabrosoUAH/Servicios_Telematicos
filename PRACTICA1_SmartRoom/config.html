@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración - Smart Room</title>
     <link rel="stylesheet" href="css/iroom.css">
+        <style>
+        .form-config select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,12 +33,14 @@
                     <option value="España">
                     <option value="Francia">
                     <option value="Italia">
-                    <option value="Portugal">
+                    <option value="Inglaterra">
                     <option value="Alemania">
                 </datalist>
 
                 <label for="ciudad">Ciudad:</label>
-                <input type="text" id="ciudad" name="ciudad">
+                 <select id="ciudad" name="ciudad" disabled>
+                    <option value="">Primero elige un país</option>
+                </select>
 
                 <label for="localizacion">Localización:</label>
                 <input type="text" id="localizacion" name="localizacion">
@@ -145,6 +154,8 @@
     </main>
 
     <script src="datos.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="ciudades.js"></script>
 
     <script>
         const tempMax = document.getElementById("tempMax");
