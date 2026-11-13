@@ -33,7 +33,15 @@ $(document).ready(function () {
             $("#pagina1 tbody tr").each(function () {
                 let ciudad = $(this).find("td").eq(0).text();
                 let valor = $(this).find("td").eq(columna - 1).text();
-                let fila = $("<div></div>").text(ciudad + ": " + valor);
+                let fila = $("<div></div>").text(ciudad + ": ");
+                let barra = $("<div></div>").text(valor);
+
+                barra.css("width", (valor*2) + "px");
+                barra.css("border", "1px solid black");
+                barra.css("margin-bottom", "5px");
+
+                fila.append(barra);
+
                 $("#barrasHistograma").append(fila);
                 console.log(ciudad, valor);
             });
