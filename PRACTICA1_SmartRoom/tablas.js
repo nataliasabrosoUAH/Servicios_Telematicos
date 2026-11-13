@@ -28,9 +28,9 @@ $(document).ready(function () {
             } else if (tipo == "luz") {
                 columna = 5;
             }
-
+            let paginaActual = $(this).closest("#pagina1, #pagina2, #pagina3, #pagina4 ");
             $("#barrasHistograma").empty();
-            $("#pagina1 tbody tr").each(function () {
+            paginaActual.find("tbody tr").each(function () {
                 let ciudad = $(this).find("td").eq(0).text();
                 let valor = $(this).find("td").eq(columna - 1).text();
                 let fila = $("<div></div>").text(ciudad + ": ");
