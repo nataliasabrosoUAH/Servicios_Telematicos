@@ -26,7 +26,9 @@
 
     <section class="seccion-galeria">
         <h2>Alrededores de las estaciones meteorológicas</h2>
-
+        <div class="carrusel">
+            <button type="button" class="flecha" id="flechaIzquierda" aria-label="Imágenes anteriores">‹</button>
+            <div class="ventana">
         <!-- Aquí las imágenes -->
          <div class="tira-imagenes">
             <figure class="foto" data-nombre="Alcalá de Henares">
@@ -60,7 +62,9 @@
                 <img src="images/galeria/santander.jpg" alt="Costa de Cantabria">
             </figure>
         </div>
-
+            </div>
+            <button type="button" class="flecha" id="flechaDerecha" aria-label="Imágenes siguientes">›</button>
+        </div>
     </section>
 
     <a href="index.html">Volver a la página principal</a>
@@ -98,10 +102,34 @@
             }
 
             $("#infoImagen").css({ left: x, top: y });
+        });   // ← cierra el mousemove
+
+        // ----- Carrusel -----
+        const paso = 215;   // ancho de una foto (200px) + separación (15px)
+
+        // Activa o desactiva cada flecha según si quedan fotos hacia ese lado
+        function actualizarFlechas() {
+            const ventana = $(".ventana");
+            const posicion = ventana.scrollLeft();
+            const maximo = ventana[0].scrollWidth - ventana.innerWidth();
+
+            $("#flechaIzquierda").prop("disabled", posicion <= 0);
+            $("#flechaDerecha").prop("disabled", posicion >= maximo - 1);
+        }
+
+        $("#flechaDerecha").click(function () {
+            $(".ventana").stop(true).animate({ scrollLeft: "+=" + paso }, 400, actualizarFlechas);
         });
 
-    });
+        $("#flechaIzquierda").click(function () {
+            $(".ventana").stop(true).animate({ scrollLeft: "-=" + paso }, 400, actualizarFlechas);
+        });
+
+        // Al cargar la página y al cambiar el tamaño de la ventana
+        actualizarFlechas();
+        $(window).resize(actualizarFlechas);
+
+    });   // ← cierra el $(document).ready
 </script>
 </body>
-
 </html>
