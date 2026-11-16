@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<estaciones zona="Zona Sur">
+    <estacion>
+        <ciudad>Sevilla</ciudad>
+        <temperatura>30</temperatura>
+        <humedad>45</humedad>
+        <ruido>125</ruido>
+        <luz>190</luz>
+        <color>FF0000</color>
+    </estacion>
+    <estacion>
+        <ciudad>Córdoba</ciudad>
+        <temperatura>31</temperatura>
+        <humedad>42</humedad>
+        <ruido>115</ruido>
+        <luz>185</luz>
+        <color>FFFF00</color>
+    </estacion>
+    <estacion>
+        <ciudad>Málaga</ciudad>
+        <temperatura>28</temperatura>
+        <humedad>58</humedad>
+        <ruido>120</ruido>
+        <luz>175</luz>
+        <color>00FFFF</color>
+    </estacion>
+    <estacion>
+        <ciudad>Granada</ciudad>
+        <temperatura>26</temperatura>
+        <humedad>50</humedad>
+        <ruido>105</ruido>
+        <luz>165</luz>
+        <color>00FF00</color>
+    </estacion>
+    <estacion>
+        <ciudad>Cádiz</ciudad>
+        <temperatura>27</temperatura>
+        <humedad>68</humedad>
+        <ruido>110</ruido>
+        <luz>170</luz>
+        <color>FFFFFF</color>
+    </estacion>
+</estaciones>

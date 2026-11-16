@@ -1,0 +1,45 @@
+{
+    "zona": "Zona Este",
+    "estaciones": [
+        {
+            "ciudad": "Valencia",
+            "temperatura": 27,
+            "humedad": 60,
+            "ruido": 125,
+            "luz": 180,
+            "color": "FFA000"
+        },
+        {
+            "ciudad": "Alicante",
+            "temperatura": 28,
+            "humedad": 62,
+            "ruido": 120,
+            "luz": 175,
+            "color": "FFFF00"
+        },
+        {
+            "ciudad": "Castellón de la Plana",
+            "temperatura": 26,
+            "humedad": 58,
+            "ruido": 110,
+            "luz": 170,
+            "color": "00FF00"
+        },
+        {
+            "ciudad": "Murcia",
+            "temperatura": 30,
+            "humedad": 48,
+            "ruido": 115,
+            "luz": 190,
+            "color": "0000FF"
+        },
+        {
+            "ciudad": "Barcelona",
+            "temperatura": 25,
+            "humedad": 64,
+            "ruido": 140,
+            "luz": 185,
+            "color": "FFFFFF"
+        }
+    ]
+}
