@@ -33,66 +33,74 @@ $(document).ready(function () {
             paginaActual.find("tbody tr").each(function () {
                 let ciudad = $(this).find("td").eq(0).text();
                 let valor = $(this).find("td").eq(columna - 1).text();
-                let fila = $("<div></div>").text(ciudad + ": ");
+                let fila = $("<div></div>");
+                let nombreCiudad = $("<span></span>").text(ciudad + ":");
                 let barra = $("<div></div>").text(valor);
 
-                barra.css("width", (valor*2) + "px");
-                barra.css("border", "1px solid black");
-                barra.css("margin-bottom", "5px");
+                fila.css("display", "flex");
+                fila.css("align-items", "center");
+                fila.css("margin-bottom", "10px");
+                nombreCiudad.css("width", "180px");
 
+                barra.css("width", (valor * 4) + "px");
+                barra.css("border", "1px solid black");
+                barra.css("background-color", "#d8bcbc");
+                barra.css("height", "22px");
+
+                fila.append(nombreCiudad);
                 fila.append(barra);
 
                 $("#barrasHistograma").append(fila);
                 console.log(ciudad, valor);
             });
 
-    $("#pagina1")
-    $("#histograma").show();
-} else {
-    $("#histograma").hide();
-}
+            $("#pagina1")
+            $("#histograma").show();
+        } else {
+            $("#histograma").hide();
+        }
     });
 
-$("#enlacePagina2").click(function () {
-    $("#pagina1").hide();
-    $("#pagina2").show();
-    $("#pagina3").hide();
-    $("#pagina4").hide();
+    $("#enlacePagina2").click(function () {
+        $("#pagina1").hide();
+        $("#pagina2").show();
+        $("#pagina3").hide();
+        $("#pagina4").hide();
 
-    $("#pagina2 table").css("border-collapse", "collapse");
-    $("#pagina2 th, #pagina2 td").css("border", "1px solid black");
-    $("#pagina2 th, #pagina2 td").css("padding", "8px");
+        $("#pagina2 table").css("border-collapse", "collapse");
+        $("#pagina2 th, #pagina2 td").css("border", "1px solid black");
+        $("#pagina2 th, #pagina2 td").css("padding", "8px");
 
-});
+    });
 
-$("#enlacePagina3").click(function () {
-    $("#pagina1").hide();
-    $("#pagina2").hide();
-    $("#pagina3").show();
-    $("#pagina4").hide();
+    $("#enlacePagina3").click(function () {
+        $("#pagina1").hide();
+        $("#pagina2").hide();
+        $("#pagina3").show();
+        $("#pagina4").hide();
 
-    $("#pagina3 table").css("border-collapse", "collapse");
-    $("#pagina3 th, #pagina3 td").css("border", "1px solid black");
-    $("#pagina3 th, #pagina3 td").css("padding", "8px");
+        $("#pagina3 table").css("border-collapse", "collapse");
+        $("#pagina3 th, #pagina3 td").css("border", "1px solid black");
+        $("#pagina3 th, #pagina3 td").css("padding", "8px");
 
-});
+    });
 
-$("#enlacePagina4").click(function () {
-    $("#pagina1").hide();
-    $("#pagina2").hide();
-    $("#pagina3").hide();
-    $("#pagina4").show();
+    $("#enlacePagina4").click(function () {
+        $("#pagina1").hide();
+        $("#pagina2").hide();
+        $("#pagina3").hide();
+        $("#pagina4").show();
 
-    $("#pagina4 table").css("border-collapse", "collapse");
-    $("#pagina4 th, #pagina4 td").css("border", "1px solid black");
-    $("#pagina4 th, #pagina4 td").css("padding", "8px");
-});
+        $("#pagina4 table").css("border-collapse", "collapse");
+        $("#pagina4 th, #pagina4 td").css("border", "1px solid black");
+        $("#pagina4 th, #pagina4 td").css("padding", "8px");
+    });
 
-$("#enlacePagina1").click(function () {
-    $("#pagina1").show();
-    $("#pagina2").hide();
-    $("#pagina3").hide();
-    $("#pagina4").hide();
-});
+    $("#enlacePagina1").click(function () {
+        $("#pagina1").show();
+        $("#pagina2").hide();
+        $("#pagina3").hide();
+        $("#pagina4").hide();
+    });
 
 });
