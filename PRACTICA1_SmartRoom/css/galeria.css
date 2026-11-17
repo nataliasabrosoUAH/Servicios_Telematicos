@@ -90,3 +90,55 @@
     font-weight: bold;
     color: #5f3f45;
 }
+/* ===== Mejora: visor de fotos en grande ===== */
+#visor {
+    border: none;
+    border-radius: 12px;
+    padding: 25px;
+    background-color: #fffaf7;
+    max-width: 90vw;
+}
+
+/* Cuando está abierto: flecha + foto + flecha, en línea */
+#visor[open] {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Fondo oscuro detrás del visor */
+#visor::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+#visor figure {
+    margin: 0;
+    text-align: center;
+}
+
+#visorImagen {
+    max-width: 70vw;
+    max-height: 70vh;
+    margin-top: 0;
+}
+
+#visorNombre {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5f3f45;
+}
+
+/* Botón de cerrar (×), arriba a la derecha */
+.visor-cerrar {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 30px;
+    color: #5f3f45;
+    cursor: pointer;
+}
