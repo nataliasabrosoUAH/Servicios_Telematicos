@@ -16,7 +16,7 @@ $(document).ready(function () {
 
         if ($(this).is(":checked")) {
             let tipo = $(this).val();
-            $("#tituloHistograma").text(tipo);
+            $("#tituloHistograma").text(tipo.charAt(0).toUpperCase() + tipo.slice(1));
 
             let columna;
             if (tipo == "temperatura") {
@@ -30,9 +30,25 @@ $(document).ready(function () {
             }
             let paginaActual = $(this).closest("#pagina1, #pagina2, #pagina3, #pagina4 ");
             $("#barrasHistograma").empty();
+            let maximo = -Infinity
+            let minimo = Infinity
+            let CiudadMaximo = "";
+            let CiudadMinimo = "";
+
             paginaActual.find("tbody tr").each(function () {
                 let ciudad = $(this).find("td").eq(0).text();
-                let valor = $(this).find("td").eq(columna - 1).text();
+                let valor = Number($(this).find("td").eq(columna - 1).text());
+
+                if (valor > maximo) {
+                    maximo = valor;
+                    ciudadMaximo = ciudad;
+                }
+
+                if (valor < minimo) {
+                    minimo = valor;
+                    ciudadMinimo = ciudad;
+                }
+
                 let fila = $("<div></div>");
                 let nombreCiudad = $("<span></span>").text(ciudad + ":");
                 let barra = $("<div></div>").text(valor);
@@ -53,6 +69,12 @@ $(document).ready(function () {
                 $("#barrasHistograma").append(fila);
                 console.log(ciudad, valor);
             });
+
+            let resumen = $("<p></p>").html(
+                "<strong>Máximo:</strong> " + ciudadMaximo + " -> " + maximo +
+                "<br><strong>Mínimo:</strong> " + ciudadMinimo + " -> " + minimo
+            );
+            $("#barrasHistograma").prepend(resumen);
 
             $("#pagina1")
             $("#histograma").show();
