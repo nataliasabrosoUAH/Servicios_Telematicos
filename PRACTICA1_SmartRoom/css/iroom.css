@@ -25,6 +25,10 @@ footer {
 nav {
     grid-column: 1;
     padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 8px;
 }
 nav a {
     margin-right: 10px;
