@@ -76,7 +76,6 @@ $(document).ready(function () {
             );
             $("#barrasHistograma").prepend(resumen);
 
-            $("#pagina1")
             $("#histograma").show();
         } else {
             $("#histograma").hide();
