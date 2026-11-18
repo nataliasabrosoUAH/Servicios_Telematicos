@@ -32,8 +32,8 @@ $(document).ready(function () {
             $("#barrasHistograma").empty();
             let maximo = -Infinity
             let minimo = Infinity
-            let CiudadMaximo = "";
-            let CiudadMinimo = "";
+            let ciudadMaximo = "";
+            let ciudadMinimo = "";
 
             paginaActual.find("tbody tr").each(function () {
                 let ciudad = $(this).find("td").eq(0).text();
